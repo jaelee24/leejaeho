@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2299.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Jaeho Lee&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--water-color: #3498db;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--text-color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--nav-bg-color: rgba(0, 0, 0, 0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Comfortaa', cursive;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--water-color);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>nav {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--nav-bg-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(5px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>nav ul {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>nav ul li {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>nav ul li a {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>nav ul li a:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.7;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.content-inner {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 10;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(5px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 4rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.water-canvas {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Additional page content styles */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.page-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-top: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 100px 20px 20px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* PLACE YOUR TEXT CONTENT WITHIN ELEMENTS WITH class="text-content" */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.text-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;canvas id="waterCanvas" class="water-canvas"&gt;&lt;/canvas&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="stalk-me.html"&gt;Stalk Me&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="music.html"&gt;Music&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="writing.html"&gt;Writing&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="working-on.html"&gt;What I'm Working On&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li&gt;&lt;a href="blog.html"&gt;Blog&lt;/a&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Home Page Content --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="home" class="content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="content-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;Jaeho Lee&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- PLACE YOUR HOME PAGE CONTENT HERE IF NEEDED --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Water animation and ripple effect</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const canvas = document.getElementById('waterCanvas');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ctx = canvas.getContext('2d');</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Set canvas to full window size</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function resizeCanvas() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvas.width = window.innerWidth;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvas.height = window.innerHeight;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.addEventListener('resize', resizeCanvas);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>resizeCanvas();</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Generate random water color on page load</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getRandomColor() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hue = Math.floor(Math.random() * 360);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const saturation = 60 + Math.floor(Math.random() * 40); // 60-100%</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const lightness = 30 + Math.floor(Math.random() * 40); // 30-70%</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return `hsl(${hue}, ${saturation}%, ${lightness}%)`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const waterColor = getRandomColor();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.documentElement.style.setProperty('--water-color', waterColor);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Determine text color based on background brightness</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getBrightness(color) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// For HSL colors</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (match) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const lightness = parseInt(match[3]);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return lightness;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return 50; // Default to middle lightness if parsing fails</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const brightness = getBrightness(waterColor);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const textColor = brightness &gt; 50 ? 'black' : 'white';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.documentElement.style.setProperty('--text-color', textColor);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Water wave simulation</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const waves = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ripples = [];</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>class Wave {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>constructor() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.x = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.amplitude = Math.random() * 20 + 5;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.period = Math.random() * 200 + 100;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.speed = Math.random() * 0.05 + 0.01;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.phase = Math.random() * Math.PI * 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.color = waterColor;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>update() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.phase += this.speed;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (this.phase &gt; Math.PI * 2) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>this.phase -= Math.PI * 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>draw(ctx) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.moveTo(0, canvas.height / 2);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>for (let x = 0; x &lt; canvas.width; x += 5) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const y = Math.sin(x / this.period + this.phase) * this.amplitude;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ctx.lineTo(x, canvas.height / 2 + y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineTo(canvas.width, canvas.height);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineTo(0, canvas.height);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.closePath();</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gradient.addColorStop(0, this.color);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gradient.addColorStop(1, adjustColor(this.color, -20));</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillStyle = gradient;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>class Ripple {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>constructor(x, y) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.x = x;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.y = y;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.radius = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.maxRadius = Math.random() * 100 + 50;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.speed = Math.random() * 2 + 1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.opacity = 1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.color = adjustColor(waterColor, 20);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>update() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.radius += this.speed;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.opacity = 1 - (this.radius / this.maxRadius);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return this.radius &lt; this.maxRadius;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>draw(ctx) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.strokeStyle = `${this.color}${Math.floor(this.opacity * 255).toString(16).padStart(2, '0')}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineWidth = 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.stroke();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Function to adjust color brightness</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function adjustColor(color, amount) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (match) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const h = parseInt(match[1]);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const s = parseInt(match[2]);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let l = parseInt(match[3]) + amount;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>l = Math.max(0, Math.min(100, l));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return `hsl(${h}, ${s}%, ${l}%)`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return color;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize waves</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for (let i = 0; i &lt; 5; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>waves.push(new Wave());</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Click event for ripples</p>
+<p class="p1"><span class="Apple-converted-space">        </span>canvas.addEventListener('click', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const rect = canvas.getBoundingClientRect();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const x = event.clientX - rect.left;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const y = event.clientY - rect.top;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ripples.push(new Ripple(x, y));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Animation loop</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function animate() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.clearRect(0, 0, canvas.width, canvas.height);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Draw base water color</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = waterColor;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillRect(0, 0, canvas.width, canvas.height);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update and draw waves</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (const wave of waves) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>wave.update();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>wave.draw(ctx);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Update and draw ripples</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = ripples.length - 1; i &gt;= 0; i--) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const active = ripples[i].update();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (active) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ripples[i].draw(ctx);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ripples.splice(i, 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>requestAnimationFrame(animate);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>animate();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
