@@ -94,18 +94,21 @@
                 });
             }
             
-            lightUpLetter(letter, intensity) {
-                if (!letter) return;
-                
+            lightUpLetter(letter, intensity) {                
                 intensity = Math.min(intensity, 1);
-                
-                if (intensity > 0.1) {
-                    // Calculate color based on intensity
-                    const yellow = Math.floor(255 * intensity);
-                    letter.style.color = `rgb(${yellow}, ${yellow}, 0)`;
+
+                const startColor = { r: 255, g: 255, b: 0 };    // yellow
+                const endColor = { r: 68, g: 68, b: 68 };         // dark grey (#444)
+
+                const r = Math.round(endColor.r + (startColor.r - endColor.r) * intensity);
+                const g = Math.round(endColor.g + (startColor.g - endColor.g) * intensity);
+                const b = Math.round(endColor.b + (startColor.b - endColor.b) * intensity);
+
+                letter.style.color = `rgb(${r}, ${g}, ${b})`;
+
+                if (intensity > 0) {
                     letter.style.textShadow = `0 0 ${Math.floor(intensity * 10)}px rgba(255, 255, ${Math.floor(intensity * 100)}, ${intensity})`;
                 } else {
-                    letter.style.color = letter.dataset.originalColor;
                     letter.style.textShadow = 'none';
                 }
             }
