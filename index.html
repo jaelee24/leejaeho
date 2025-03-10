@@ -1,225 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaeho Lee</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Rubik', sans-serif;
-            background-color: #f5ebe0;
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-            filter: sepia(0.5) brightness(0.7);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jaeho Lee</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Rubik', sans-serif;
+      background-color: #000; /* Changed to black */
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      filter: sepia(0.5) brightness(0.7);
+    }
 
-        .nav-ribbon {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px 0;
-            background-color: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
+    .nav-ribbon {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 0;
+      background-color: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
 
-        .nav-ribbon a {
-            color: #d6ccc2;
-            text-decoration: none;
-            font-size: 18px;
-            position: relative;
-            transition: color 0.3s;
-        }
+    .nav-ribbon a {
+      color: #d6ccc2;
+      text-decoration: none;
+      font-size: 18px;
+      position: relative;
+      transition: color 0.3s;
+    }
 
-        .center-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 72px;
-            color: #d6ccc2;
-            letter-spacing: 3px;
-        }
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 72px;
+      color: #d6ccc2;
+      letter-spacing: 3px;
+    }
 
-        .firefly {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, rgba(255,255,150,0.8) 0%, rgba(255,255,150,0) 70%);
-            border-radius: 50%;
-            filter: blur(8px);
-            box-shadow: 0 0 20px 10px rgba(255,255,150,0.3);
-            z-index: 10;
-        }
+    .firefly {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, rgba(255,255,0,1) 0%, rgba(255,255,0,0) 70%); /* Brighter yellow */
+      border-radius: 50%;
+      filter: blur(8px);
+      box-shadow: 0 0 20px 10px rgba(255,255,0,0.5); /* Increased intensity */
+      z-index: 10;
+    }
 
-        .glow {
-            text-shadow: 0 0 10px #ffff80, 0 0 20px #ffff80;
-            color: #ffff80 !important;
-        }
+    .glow {
+      text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00; /* More vibrant yellow glow */
+      color: #ffff00 !important;
+    }
 
-        /* For content pages */
-        .content {
-            margin-top: 100px;
-            padding: 20px;
-            color: #d6ccc2;
-            line-height: 1.6;
-        }
-    </style>
+    /* For content pages */
+    .content {
+      margin-top: 100px;
+      padding: 20px;
+      color: #d6ccc2;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
-    <div class="nav-ribbon">
-        <a href="index.html" class="nav-item">home</a>
-        <a href="stalk.html" class="nav-item">stalk me</a>
-        <a href="music.html" class="nav-item">music</a>
-        <a href="writing.html" class="nav-item">writing</a>
-        <a href="working.html" class="nav-item">what i'm working on</a>
-        <a href="blog.html" class="nav-item">blog</a>
-    </div>
+  <div class="nav-ribbon">
+    <a href="index.html" class="nav-item">home</a>
+    <a href="stalk.html" class="nav-item">stalk me</a>
+    <a href="music.html" class="nav-item">music</a>
+    <a href="writing.html" class="nav-item">writing</a>
+    <a href="working.html" class="nav-item">what i'm working on</a>
+    <a href="blog.html" class="nav-item">blog</a>
+  </div>
 
-    <div class="center-text" id="mainText">Jaeho Lee</div>
+  <div class="center-text" id="mainText">Jaeho Lee</div>
 
-    <script>
-        // Create fireflies
-        const numFireflies = 7;
-        const fireflies = [];
-        const letterElements = [];
+  <script>
+    // Adjustable variables
+    const erraticFactor = 2; // Increase for more erratic/faster movement
+    const glowDelay = 1000; // Duration (in ms) for which letters stay glowing after being lit
+
+    const numFireflies = 7;
+    const fireflies = [];
+    const letterElements = [];
+
+    // Get all text nodes and wrap letters in spans
+    function getAllTextNodes() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const mainText = document.getElementById('mainText');
+      
+      // Split the main text into individual letters and wrap them in spans
+      const mainTextContent = mainText.textContent;
+      mainText.textContent = '';
+      
+      for (let i = 0; i < mainTextContent.length; i++) {
+        const letterSpan = document.createElement('span');
+        letterSpan.textContent = mainTextContent[i];
+        // Set a property to store last glowing time
+        letterSpan.dataset.lastGlowing = 0;
+        mainText.appendChild(letterSpan);
+        letterElements.push(letterSpan);
+      }
+      
+      // Process nav items similarly
+      navItems.forEach(item => {
+        const text = item.textContent;
+        item.textContent = '';
         
-        // Get all text nodes
-        function getAllTextNodes() {
-            const navItems = document.querySelectorAll('.nav-item');
-            const mainText = document.getElementById('mainText');
-            
-            // Split the main text into individual letters and wrap them in spans
-            const mainTextContent = mainText.textContent;
-            mainText.textContent = '';
-            
-            for (let i = 0; i < mainTextContent.length; i++) {
-                const letterSpan = document.createElement('span');
-                letterSpan.textContent = mainTextContent[i];
-                letterSpan.dataset.letter = true;
-                mainText.appendChild(letterSpan);
-                letterElements.push(letterSpan);
-            }
-            
-            // Add nav items to letter elements
-            navItems.forEach(item => {
-                // Split nav item text into individual letters and wrap them in spans
-                const text = item.textContent;
-                item.textContent = '';
-                
-                for (let i = 0; i < text.length; i++) {
-                    const letterSpan = document.createElement('span');
-                    letterSpan.textContent = text[i];
-                    letterSpan.dataset.letter = true;
-                    item.appendChild(letterSpan);
-                    letterElements.push(letterSpan);
-                }
-            });
+        for (let i = 0; i < text.length; i++) {
+          const letterSpan = document.createElement('span');
+          letterSpan.textContent = text[i];
+          letterSpan.dataset.lastGlowing = 0;
+          item.appendChild(letterSpan);
+          letterElements.push(letterSpan);
         }
+      });
+    }
+    
+    // Initialize fireflies with erratic movement
+    function createFireflies() {
+      for (let i = 0; i < numFireflies; i++) {
+        const firefly = document.createElement('div');
+        firefly.className = 'firefly';
         
-        // Initialize fireflies
-        function createFireflies() {
-            for (let i = 0; i < numFireflies; i++) {
-                const firefly = document.createElement('div');
-                firefly.className = 'firefly';
-                
-                // Random starting position
-                const x = Math.random() * window.innerWidth;
-                const y = Math.random() * window.innerHeight;
-                
-                // Random velocity
-                const vx = (Math.random() - 0.5) * 1;
-                const vy = (Math.random() - 0.5) * 1;
-                
-                firefly.style.left = `${x}px`;
-                firefly.style.top = `${y}px`;
-                
-                document.body.appendChild(firefly);
-                
-                fireflies.push({
-                    element: firefly,
-                    x,
-                    y,
-                    vx,
-                    vy
-                });
-            }
-        }
+        // Random starting position
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
         
-        // Calculate distance between two points
-        function distance(x1, y1, x2, y2) {
-            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        }
+        // Random velocity with erratic factor
+        const vx = (Math.random() - 0.5) * erraticFactor;
+        const vy = (Math.random() - 0.5) * erraticFactor;
         
-        // Main animation loop
-        function animate() {
-            // Move fireflies
-            fireflies.forEach(firefly => {
-                firefly.x += firefly.vx;
-                firefly.y += firefly.vy;
-                
-                // Wrap around screen edges
-                if (firefly.x < -30) firefly.x = window.innerWidth + 30;
-                if (firefly.x > window.innerWidth + 30) firefly.x = -30;
-                if (firefly.y < -30) firefly.y = window.innerHeight + 30;
-                if (firefly.y > window.innerHeight + 30) firefly.y = -30;
-                
-                firefly.element.style.left = `${firefly.x}px`;
-                firefly.element.style.top = `${firefly.y}px`;
-            });
-            
-            // Check light interaction with letters
-            letterElements.forEach(letter => {
-                let isGlowing = false;
-                
-                // Get letter position
-                const rect = letter.getBoundingClientRect();
-                const letterX = rect.left + rect.width / 2;
-                const letterY = rect.top + rect.height / 2;
-                
-                // Check if any firefly is close enough
-                fireflies.forEach(firefly => {
-                    const dist = distance(firefly.x, firefly.y, letterX, letterY);
-                    if (dist < 100) { // Light radius
-                        isGlowing = true;
-                    }
-                });
-                
-                // Apply or remove glow effect
-                if (isGlowing) {
-                    letter.classList.add('glow');
-                } else {
-                    letter.classList.remove('glow');
-                }
-            });
-            
-            requestAnimationFrame(animate);
-        }
+        firefly.style.left = `${x}px`;
+        firefly.style.top = `${y}px`;
         
-        // Initialize everything
-        window.onload = function() {
-            getAllTextNodes();
-            createFireflies();
-            animate();
-        };
+        document.body.appendChild(firefly);
         
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            // Adjust firefly positions if needed
-            fireflies.forEach(firefly => {
-                if (firefly.x > window.innerWidth) firefly.x = window.innerWidth / 2;
-                if (firefly.y > window.innerHeight) firefly.y = window.innerHeight / 2;
-            });
+        fireflies.push({
+          element: firefly,
+          x,
+          y,
+          vx,
+          vy
         });
-    </script>
+      }
+    }
+    
+    // Calculate distance between two points
+    function distance(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+    
+    // Main animation loop
+    function animate() {
+      const currentTime = Date.now();
+
+      // Move fireflies
+      fireflies.forEach(firefly => {
+        firefly.x += firefly.vx;
+        firefly.y += firefly.vy;
+        
+        // Wrap around screen edges
+        if (firefly.x < -30) firefly.x = window.innerWidth + 30;
+        if (firefly.x > window.innerWidth + 30) firefly.x = -30;
+        if (firefly.y < -30) firefly.y = window.innerHeight + 30;
+        if (firefly.y > window.innerHeight + 30) firefly.y = -30;
+        
+        firefly.element.style.left = `${firefly.x}px`;
+        firefly.element.style.top = `${firefly.y}px`;
+      });
+      
+      // Check light interaction with letters and extend glow duration
+      letterElements.forEach(letter => {
+        // Get letter position
+        const rect = letter.getBoundingClientRect();
+        const letterX = rect.left + rect.width / 2;
+        const letterY = rect.top + rect.height / 2;
+        let lit = false;
+        
+        // Check if any firefly is close enough
+        fireflies.forEach(firefly => {
+          const dist = distance(firefly.x, firefly.y, letterX, letterY);
+          if (dist < 100) { // Light radius
+            lit = true;
+          }
+        });
+        
+        if (lit) {
+          // Update last glowing time if lit
+          letter.dataset.lastGlowing = currentTime;
+          letter.classList.add('glow');
+        } else {
+          // Keep glow if within delay period
+          const lastTime = parseInt(letter.dataset.lastGlowing, 10);
+          if (currentTime - lastTime < glowDelay) {
+            letter.classList.add('glow');
+          } else {
+            letter.classList.remove('glow');
+          }
+        }
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    // Initialize everything
+    window.onload = function() {
+      getAllTextNodes();
+      createFireflies();
+      animate();
+    };
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      // Adjust firefly positions if needed
+      fireflies.forEach(firefly => {
+        if (firefly.x > window.innerWidth) firefly.x = window.innerWidth / 2;
+        if (firefly.y > window.innerHeight) firefly.y = window.innerHeight / 2;
+      });
+    });
+  </script>
 </body>
 </html>
