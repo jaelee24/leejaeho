@@ -177,15 +177,6 @@
         let temp = lastMap;
         lastMap = rippleMap;
         rippleMap = temp;
-        
-        // Add subtle continuous movement
-        if (Math.random() < 0.05) { // 5% chance each frame to add tiny ripples
-          const x = Math.floor(Math.random() * (gridWidth - 2)) + 1;
-          const y = Math.floor(Math.random() * (gridHeight - 2)) + 1;
-          const idx = x + y * gridWidth;
-          lastMap[idx] += (Math.random() * 2 - 1) * 0.8;
-        }
-      }
       
       // FUNCTION THAT RENDERS THE SIMULATION TO THE OFFSCREEN CANVAS THEN SCALES IT UP
       function renderRipple() {
@@ -240,7 +231,7 @@
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
         // A small disturbance on mouse move
-        disturb(mx, my, 3);
+        disturb(mx, my, 2.5);
       });
       
       document.addEventListener('mousedown', function(e) {
@@ -248,7 +239,7 @@
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
         // A stronger disturbance on click
-        disturb(mx, my, 30);
+        disturb(mx, my, 25);
       });
       
       // INITIALIZE AND START
