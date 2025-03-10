@@ -20,7 +20,6 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      pointer-events: all; /* Ensure clicks pass through everywhere */
     }
     
     /* Navigation styles */
@@ -30,7 +29,7 @@
       width: 100%;
       background-color: rgba(0, 0, 0, 0.7);
       z-index: 1000;
-      pointer-events: auto; /* Make sure nav receives clicks */
+      pointer-events: none; /* This allows clicks to pass through to the canvas */
     }
     
     nav ul {
@@ -50,6 +49,7 @@
       text-decoration: none;
       padding: 15px;
       font-weight: bold;
+      pointer-events: auto; /* Re-enable pointer events just for links */
     }
     
     nav a:hover {
@@ -62,16 +62,15 @@
       color: white;
       text-align: center;
       padding: 20px;
-      position: relative;
-      z-index: 10;
-      pointer-events: none; /* Let clicks pass through to canvas */
+      pointer-events: none; /* Allow clicks to pass through to canvas */
     }
     
     #homeSection {
       font-size: 4em;
       font-weight: bold;
       margin-top: 25vh;
-      pointer-events: none; /* Let clicks pass through to canvas */
+      opacity: 0; /* Start invisible for fade-in effect */
+      transition: opacity 3s ease-in-out;
     }
   </style>
 </head>
@@ -116,16 +115,24 @@
       
       // SIMULATION GRID SETUP
       // cellSize: each simulation cell will cover (cellSize x cellSize) pixels.
-      const cellSize = 8; // Increased cell size for larger ripples
+      const cellSize = 6; // Increased cell size for slower, more viscous movement
       let gridWidth, gridHeight;
       let rippleMap, lastMap; // two grids (as Float32Array arrays)
-      // damping factor for ripple energy decay - increased for higher viscosity
-      const damping = 0.975;
+      // damping factor for ripple energy decay (increased for more viscosity)
+      const damping = 0.975; // Closer to 1 means ripples persist longer
       
-      // Automatic disturbance parameters
-      const autoDisturbInterval = 3000; // How often to create auto ripples (ms)
-      const autoDisturbMagnitude = 2; // How strong the auto ripples are
-      let lastAutoDisturb = 0;
+      // For mouse lag effect
+      let mouseX = -1;
+      let mouseY = -1;
+      let targetMouseX = -1;
+      let targetMouseY = -1;
+      
+      // For timing the name fade-in
+      let startTime = Date.now();
+      let initialRippleIntensity = 15; // Higher initial ripple intensity
+      let calmThreshold = 0.1; // Threshold to determine when water is calm
+      let isCalm = false;
+      let nameFadedIn = false;
       
       function initSimulation() {
         gridWidth = Math.ceil(cw / cellSize);
@@ -134,9 +141,9 @@
         rippleMap = new Float32Array(size);
         lastMap = new Float32Array(size);
         
-        // Initialize with slightly more noticeable random noise
+        // Create initial intense ripples
         for (let i = 0; i < size; i++) {
-          lastMap[i] = (Math.random() * 4 - 2);
+          lastMap[i] = (Math.random() * 2 - 1) * initialRippleIntensity;
         }
       }
       
@@ -144,21 +151,44 @@
       const offCanvas = document.createElement('canvas');
       let offCtx = offCanvas.getContext('2d');
       
-      // BASE COLOR FOR THE WATER - Darker blue
-      const baseColor = { r: 0, g: 60, b: 120 }; // Darker blue color
+      // BASE COLOR FOR THE WATER - DARKER BLUE
+      const baseColor = { r: 0, g: 55, b: 95 }; // Darker blue
+      
+      // Calculate water calmness (average absolute ripple value)
+      function calculateCalmness() {
+        let sum = 0;
+        const size = gridWidth * gridHeight;
+        for (let i = 0; i < size; i++) {
+          sum += Math.abs(lastMap[i]);
+        }
+        return sum / size;
+      }
+      
+      // Check if water is calm and fade in name if needed
+      function checkCalmness() {
+        const calmness = calculateCalmness();
+        if (!isCalm && calmness < calmThreshold) {
+          isCalm = true;
+          
+          // Fade in the name
+          if (!nameFadedIn) {
+            document.getElementById('homeSection').style.opacity = 1;
+            nameFadedIn = true;
+          }
+        }
+      }
       
       // FUNCTION THAT UPDATES THE SIMULATION
       function updateRipple() {
-        // Create gentle automatic disturbances to keep water moving
-        const now = Date.now();
-        if (now - lastAutoDisturb > autoDisturbInterval) {
-          const x = Math.floor(Math.random() * gridWidth);
-          const y = Math.floor(Math.random() * gridHeight);
-          if (x > 0 && x < gridWidth-1 && y > 0 && y < gridHeight-1) {
-            const idx = x + y * gridWidth;
-            lastMap[idx] += (Math.random() * 2 - 1) * autoDisturbMagnitude;
+        // Update lagged mouse position
+        if (targetMouseX !== -1) {
+          mouseX = mouseX + (targetMouseX - mouseX) * 0.1;
+          mouseY = mouseY + (targetMouseY - mouseY) * 0.1;
+          
+          // Create ripple at lagged mouse position
+          if (mouseX > 0 && mouseY > 0) {
+            disturb(mouseX, mouseY, 2); // Reduced intensity for regular mouse movement
           }
-          lastAutoDisturb = now;
         }
         
         // Swap the maps: we'll compute new ripple values into rippleMap using lastMap
@@ -166,10 +196,11 @@
           for (let x = 1; x < gridWidth - 1; x++) {
             const idx = x + y * gridWidth;
             // average the four direct neighbors from lastMap and subtract the current value in rippleMap
+            // Changed the formula to make it more viscous by increasing the contribution of the current value
             const newVal = ((lastMap[idx - 1] +
                              lastMap[idx + 1] +
                              lastMap[idx - gridWidth] +
-                             lastMap[idx + gridWidth]) / 2 - rippleMap[idx]) * damping;
+                             lastMap[idx + gridWidth]) / 2.2 - rippleMap[idx]) * damping;
             rippleMap[idx] = newVal;
           }
         }
@@ -178,12 +209,10 @@
         lastMap = rippleMap;
         rippleMap = temp;
         
-        // Add subtle continuous movement
-        if (Math.random() < 0.05) { // 5% chance each frame to add tiny ripples
-          const x = Math.floor(Math.random() * (gridWidth - 2)) + 1;
-          const y = Math.floor(Math.random() * (gridHeight - 2)) + 1;
-          const idx = x + y * gridWidth;
-          lastMap[idx] += (Math.random() * 2 - 1) * 0.8;
+        // Check if water has become calm
+        const timeElapsed = Date.now() - startTime;
+        if (timeElapsed > 2000) { // Wait at least 2 seconds before checking calmness
+          checkCalmness();
         }
       }
       
@@ -194,7 +223,7 @@
         const imageData = offCtx.createImageData(gridWidth, gridHeight);
         const data = imageData.data;
         // The ripple value will displace the base color a little.
-        const factor = 4; // Increased for more pronounced ripples
+        const factor = 5; // Increased factor for more pronounced ripples
         for (let y = 0; y < gridHeight; y++) {
           for (let x = 0; x < gridWidth; x++) {
             const idx = x + y * gridWidth;
@@ -230,23 +259,38 @@
         const x = Math.floor(cx / cellSize);
         const y = Math.floor(cy / cellSize);
         if (x < 1 || x >= gridWidth - 1 || y < 1 || y >= gridHeight - 1) return;
-        const idx = x + y * gridWidth;
-        lastMap[idx] += magnitude;
+        
+        // Create a wider ripple effect
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            const idx = (x + dx) + (y + dy) * gridWidth;
+            lastMap[idx] += magnitude * (1 - (Math.abs(dx) + Math.abs(dy)) / 3);
+          }
+        }
       }
       
       // MOUSE EVENTS FOR THE WATER INTERACTION
-      document.addEventListener('mousemove', function(e) {
+      window.addEventListener('mousemove', function(e) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
-        // A small disturbance on mouse move
-        disturb(mx, my, 3);
+        
+        // Update target mouse position for lag effect
+        targetMouseX = mx;
+        targetMouseY = my;
+        
+        // Initialize actual mouse position if this is the first movement
+        if (mouseX === -1) {
+          mouseX = mx;
+          mouseY = my;
+        }
       });
       
-      document.addEventListener('mousedown', function(e) {
+      window.addEventListener('mousedown', function(e) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
+        
         // A stronger disturbance on click
         disturb(mx, my, 30);
       });
@@ -254,6 +298,9 @@
       // INITIALIZE AND START
       resize();
       animate();
+      
+      // Reset the start time
+      startTime = Date.now();
     })();
   </script>
 </body>
