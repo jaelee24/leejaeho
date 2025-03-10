@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaeho Lee</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #444;
+            font-family: 'Rubik', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        .nav-ribbon {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: transparent;
+            padding: 20px 0;
+            z-index: 10;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+            color: #444;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+            padding: 5px;
+        }
+
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            z-index: 5;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+    </style>
+</head>
+<body>
+    <div class="nav-ribbon">
+        <a href="#" class="nav-item">home</a>
+        <a href="#" class="nav-item">stalk me</a>
+        <a href="#" class="nav-item">music</a>
+        <a href="#" class="nav-item">writing</a>
+        <a href="#" class="nav-item">what i'm working on</a>
+        <a href="#" class="nav-item">blog</a>
+    </div>
+
+    <div class="center-text">Jaeho Lee</div>
+
+    <script>
+        // Text lighting effect
+        class TextLighting {
+            constructor() {
+                this.centerText = document.querySelector('.center-text');
+                this.navItems = document.querySelectorAll('.nav-item');
+                this.allTextElements = [...this.navItems, this.centerText];
+                
+                // Create span for each letter in all text elements
+                this.allTextElements.forEach(element => {
+                    const text = element.textContent;
+                    element.textContent = '';
+                    
+                    for (let i = 0; i < text.length; i++) {
+                        const span = document.createElement('span');
+                        span.textContent = text[i];
+                        span.style.transition = 'color 0.3s ease, text-shadow 0.3s ease';
+                        span.dataset.originalColor = '#444';
+                        span.style.color = '#444';
+                        element.appendChild(span);
+                    }
+                });
+            }
+            
+            lightUpLetter(letter, intensity) {                
+                intensity = Math.min(intensity, 1);
+
+                const startColor = { r: 255, g: 255, b: 0 };    // yellow
+                const endColor = { r: 68, g: 68, b: 68 };         // dark grey (#444)
+
+                const r = Math.round(endColor.r + (startColor.r - endColor.r) * intensity);
+                const g = Math.round(endColor.g + (startColor.g - endColor.g) * intensity);
+                const b = Math.round(endColor.b + (startColor.b - endColor.b) * intensity);
+
+                letter.style.color = `rgb(${r}, ${g}, ${b})`;
+
+                if (intensity > 0) {
+                    letter.style.textShadow = `0 0 ${Math.floor(intensity * 10)}px rgba(255, 255, ${Math.floor(intensity * 100)}, ${intensity})`;
+                } else {
+                    letter.style.textShadow = 'none';
+                }
+            }
+            
+            update(fireflyPositions) {
+                // For each text element, check distance to each firefly
+                this.allTextElements.forEach(element => {
+                    const letters = element.children;
+                    
+                    for (let i = 0; i < letters.length; i++) {
+                        const letter = letters[i];
+                        const rect = letter.getBoundingClientRect();
+                        const letterX = rect.left + rect.width / 2;
+                        const letterY = rect.top + rect.height / 2;
+                        
+                        let maxIntensity = 0;
+                        
+                        // Check distance to each firefly
+                        fireflyPositions.forEach(firefly => {
+                            const dx = letterX - firefly.x;
+                            const dy = letterY - firefly.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            const intensity = Math.max(0, 1 - distance / 200);
+                            maxIntensity = Math.max(maxIntensity, intensity);
+                        });
+                        
+                        this.lightUpLetter(letter, maxIntensity);
+                    }
+                });
+            }
+        }
+
+        // Firefly class
+        class Firefly {
+            constructor(width, height) {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 25 + 35;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.brightness = Math.random() * 0.5 + 0.5;
+                this.width = width;
+                this.height = height;
+                
+                this.element = document.createElement('div');
+                this.element.className = 'firefly';
+                document.body.appendChild(this.element);
+                
+                this.update();
+            }
+            
+            update() {
+                // Update position
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // Wrap around screen edges
+                if (this.x < -this.size) this.x = this.width + this.size;
+                if (this.x > this.width + this.size) this.x = -this.size;
+                if (this.y < -this.size) this.y = this.height + this.size;
+                if (this.y > this.height + this.size) this.y = -this.size;
+                
+                // Slightly vary brightness for pulsing effect
+                const pulsingBrightness = this.brightness * (0.8 + Math.sin(Date.now() * 0.003) * 0.2);
+                
+                // Update element
+                this.element.style.left = `${this.x - this.size / 2}px`;
+                this.element.style.top = `${this.y - this.size / 2}px`;
+                this.element.style.width = `${this.size}px`;
+                this.element.style.height = `${this.size}px`;
+                this.element.style.opacity = pulsingBrightness;
+                this.element.style.background = `radial-gradient(circle, rgba(255, 255, 155, ${pulsingBrightness}) 0%, rgba(255, 255, 155, 0) 50%)`;
+            }
+        }
+
+        // Main class to handle everything
+        class FireflyEffect {
+            constructor(numFireflies) {
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
+                this.fireflies = [];
+                this.textLighting = new TextLighting();
+                
+                // Create fireflies
+                for (let i = 0; i < numFireflies; i++) {
+                    this.fireflies.push(new Firefly(this.width, this.height));
+                }
+                
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    this.width = window.innerWidth;
+                    this.height = window.innerHeight;
+                });
+                
+                // Start animation loop
+                this.animate();
+            }
+            
+            getFireflyPositions() {
+                return this.fireflies.map(firefly => ({
+                    x: firefly.x,
+                    y: firefly.y
+                }));
+            }
+            
+            animate() {
+                // Update fireflies
+                this.fireflies.forEach(firefly => firefly.update());
+                
+                // Update text lighting
+                this.textLighting.update(this.getFireflyPositions());
+                
+                // Request next frame
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            const effect = new FireflyEffect(10); // Create 8 fireflies
+        });
+    </script>
+</body>
+</html>
