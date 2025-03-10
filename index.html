@@ -20,6 +20,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
+      pointer-events: all; /* Ensure clicks pass through everywhere */
     }
     
     /* Navigation styles */
@@ -29,6 +30,7 @@
       width: 100%;
       background-color: rgba(0, 0, 0, 0.7);
       z-index: 1000;
+      pointer-events: auto; /* Make sure nav receives clicks */
     }
     
     nav ul {
@@ -60,12 +62,16 @@
       color: white;
       text-align: center;
       padding: 20px;
+      position: relative;
+      z-index: 10;
+      pointer-events: none; /* Let clicks pass through to canvas */
     }
     
     #homeSection {
       font-size: 4em;
       font-weight: bold;
       margin-top: 25vh;
+      pointer-events: none; /* Let clicks pass through to canvas */
     }
   </style>
 </head>
@@ -110,11 +116,16 @@
       
       // SIMULATION GRID SETUP
       // cellSize: each simulation cell will cover (cellSize x cellSize) pixels.
-      const cellSize = 4;
+      const cellSize = 8; // Increased cell size for larger ripples
       let gridWidth, gridHeight;
       let rippleMap, lastMap; // two grids (as Float32Array arrays)
-      // damping factor for ripple energy decay
-      const damping = 0.99;
+      // damping factor for ripple energy decay - increased for higher viscosity
+      const damping = 0.975;
+      
+      // Automatic disturbance parameters
+      const autoDisturbInterval = 3000; // How often to create auto ripples (ms)
+      const autoDisturbMagnitude = 2; // How strong the auto ripples are
+      let lastAutoDisturb = 0;
       
       function initSimulation() {
         gridWidth = Math.ceil(cw / cellSize);
@@ -122,9 +133,10 @@
         const size = gridWidth * gridHeight;
         rippleMap = new Float32Array(size);
         lastMap = new Float32Array(size);
-        // Optionally, start with a very slight random noise so the water looks "alive"
+        
+        // Initialize with slightly more noticeable random noise
         for (let i = 0; i < size; i++) {
-          lastMap[i] = Math.random() * 2 - 1;
+          lastMap[i] = (Math.random() * 4 - 2);
         }
       }
       
@@ -132,11 +144,23 @@
       const offCanvas = document.createElement('canvas');
       let offCtx = offCanvas.getContext('2d');
       
-      // BASE COLOR FOR THE WATER
-      const baseColor = { r: 0, g: 119, b: 190 }; // a pleasant blue
+      // BASE COLOR FOR THE WATER - Darker blue
+      const baseColor = { r: 0, g: 60, b: 120 }; // Darker blue color
       
       // FUNCTION THAT UPDATES THE SIMULATION
       function updateRipple() {
+        // Create gentle automatic disturbances to keep water moving
+        const now = Date.now();
+        if (now - lastAutoDisturb > autoDisturbInterval) {
+          const x = Math.floor(Math.random() * gridWidth);
+          const y = Math.floor(Math.random() * gridHeight);
+          if (x > 0 && x < gridWidth-1 && y > 0 && y < gridHeight-1) {
+            const idx = x + y * gridWidth;
+            lastMap[idx] += (Math.random() * 2 - 1) * autoDisturbMagnitude;
+          }
+          lastAutoDisturb = now;
+        }
+        
         // Swap the maps: we'll compute new ripple values into rippleMap using lastMap
         for (let y = 1; y < gridHeight - 1; y++) {
           for (let x = 1; x < gridWidth - 1; x++) {
@@ -153,6 +177,14 @@
         let temp = lastMap;
         lastMap = rippleMap;
         rippleMap = temp;
+        
+        // Add subtle continuous movement
+        if (Math.random() < 0.05) { // 5% chance each frame to add tiny ripples
+          const x = Math.floor(Math.random() * (gridWidth - 2)) + 1;
+          const y = Math.floor(Math.random() * (gridHeight - 2)) + 1;
+          const idx = x + y * gridWidth;
+          lastMap[idx] += (Math.random() * 2 - 1) * 0.8;
+        }
       }
       
       // FUNCTION THAT RENDERS THE SIMULATION TO THE OFFSCREEN CANVAS THEN SCALES IT UP
@@ -162,7 +194,7 @@
         const imageData = offCtx.createImageData(gridWidth, gridHeight);
         const data = imageData.data;
         // The ripple value will displace the base color a little.
-        const factor = 3;
+        const factor = 4; // Increased for more pronounced ripples
         for (let y = 0; y < gridHeight; y++) {
           for (let x = 0; x < gridWidth; x++) {
             const idx = x + y * gridWidth;
@@ -203,20 +235,20 @@
       }
       
       // MOUSE EVENTS FOR THE WATER INTERACTION
-      canvas.addEventListener('mousemove', function(e) {
+      document.addEventListener('mousemove', function(e) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
         // A small disturbance on mouse move
-        disturb(mx, my, 5);
+        disturb(mx, my, 3);
       });
       
-      canvas.addEventListener('mousedown', function(e) {
+      document.addEventListener('mousedown', function(e) {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
         // A stronger disturbance on click
-        disturb(mx, my, 50);
+        disturb(mx, my, 30);
       });
       
       // INITIALIZE AND START
