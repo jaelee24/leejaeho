@@ -1,299 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaeho Lee</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --water-color: #3498db;
-            --text-color: white;
-            --nav-bg-color: rgba(0, 0, 0, 0.5);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Comfortaa', cursive;
-        }
-        
-        body {
-            overflow-x: hidden;
-            background-color: var(--water-color);
-        }
-        
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            background-color: var(--nav-bg-color);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin: 0 15px;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        nav ul li a:hover {
-            opacity: 0.7;
-        }
-        
-        .content {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .content-inner {
-            z-index: 10;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-        }
-        
-        h1 {
-            font-size: 4rem;
-            color: var(--text-color);
-            margin-bottom: 20px;
-        }
-        
-        .water-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        
-        /* Additional page content styles */
-        .page-content {
-            padding-top: 100px;
-            min-height: 100vh;
-            color: var(--text-color);
-            padding: 100px 20px 20px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* PLACE YOUR TEXT CONTENT WITHIN ELEMENTS WITH class="text-content" */
-        .text-content {
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaeho Lee</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    
+    /* Canvas for water effect */
+    #waterCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    /* Navigation styles */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+    
+    nav ul {
+      display: flex;
+      justify-content: space-around;
+      list-style-type: none;
+      margin: 0;
+      padding: 15px 0;
+    }
+    
+    nav li {
+      display: inline;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px;
+      font-weight: bold;
+    }
+    
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Main content styles */
+    #mainContent {
+      margin-top: 80px;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    #homeSection {
+      font-size: 4em;
+      font-weight: bold;
+      margin-top: 25vh;
+    }
+  </style>
 </head>
 <body>
-    <canvas id="waterCanvas" class="water-canvas"></canvas>
-    
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="stalk-me.html">Stalk Me</a></li>
-            <li><a href="music.html">Music</a></li>
-            <li><a href="writing.html">Writing</a></li>
-            <li><a href="working-on.html">What I'm Working On</a></li>
-            <li><a href="blog.html">Blog</a></li>
-        </ul>
-    </nav>
-    
-    <!-- Home Page Content -->
-    <div id="home" class="content">
-        <div class="content-inner">
-            <h1>Jaeho Lee</h1>
-            <!-- PLACE YOUR HOME PAGE CONTENT HERE IF NEEDED -->
-        </div>
+  <!-- CANVAS FOR WATER EFFECT -->
+  <canvas id="waterCanvas"></canvas>
+  
+  <!-- FIXED TOP NAVIGATION BAR -->
+  <nav>
+    <ul>
+      <li><a href="#home">HOME</a></li>
+      <li><a href="#stalk">STALK ME</a></li>
+      <li><a href="#music">MUSIC</a></li>
+      <li><a href="#writing">WRITING</a></li>
+      <li><a href="#projects">WHAT I'M WORKING ON</a></li>
+      <li><a href="#blog">BLOG</a></li>
+    </ul>
+  </nav>
+
+  <!-- THE MAIN CONTENT AREA -->
+  <div id="mainContent">
+    <div id="homeSection">
+      JAEHO LEE
     </div>
-    
-    <script>
-        // Water animation and ripple effect
-        const canvas = document.getElementById('waterCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas to full window size
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+  </div>
+
+  <!-- THE WATER RIPPLES & FLUID SIMULATION SCRIPT -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('waterCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      // FULLSCREEN RESIZE
+      let cw, ch;
+      function resize() {
+        cw = canvas.width = window.innerWidth;
+        ch = canvas.height = window.innerHeight;
+        // Recreate simulation grid based on new canvas size.
+        initSimulation();
+      }
+      window.addEventListener('resize', resize);
+      
+      // SIMULATION GRID SETUP
+      // cellSize: each simulation cell will cover (cellSize x cellSize) pixels.
+      const cellSize = 4;
+      let gridWidth, gridHeight;
+      let rippleMap, lastMap; // two grids (as Float32Array arrays)
+      // damping factor for ripple energy decay
+      const damping = 0.99;
+      
+      function initSimulation() {
+        gridWidth = Math.ceil(cw / cellSize);
+        gridHeight = Math.ceil(ch / cellSize);
+        const size = gridWidth * gridHeight;
+        rippleMap = new Float32Array(size);
+        lastMap = new Float32Array(size);
+        // Optionally, start with a very slight random noise so the water looks "alive"
+        for (let i = 0; i < size; i++) {
+          lastMap[i] = Math.random() * 2 - 1;
         }
-        
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        
-        // Generate random water color on page load
-        function getRandomColor() {
-            const hue = Math.floor(Math.random() * 360);
-            const saturation = 60 + Math.floor(Math.random() * 40); // 60-100%
-            const lightness = 30 + Math.floor(Math.random() * 40); // 30-70%
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+      }
+      
+      // OFFSCREEN CANVAS TO DRAW THE SIMULATION AT LOW-RES
+      const offCanvas = document.createElement('canvas');
+      let offCtx = offCanvas.getContext('2d');
+      
+      // BASE COLOR FOR THE WATER
+      const baseColor = { r: 0, g: 119, b: 190 }; // a pleasant blue
+      
+      // FUNCTION THAT UPDATES THE SIMULATION
+      function updateRipple() {
+        // Swap the maps: we'll compute new ripple values into rippleMap using lastMap
+        for (let y = 1; y < gridHeight - 1; y++) {
+          for (let x = 1; x < gridWidth - 1; x++) {
+            const idx = x + y * gridWidth;
+            // average the four direct neighbors from lastMap and subtract the current value in rippleMap
+            const newVal = ((lastMap[idx - 1] +
+                             lastMap[idx + 1] +
+                             lastMap[idx - gridWidth] +
+                             lastMap[idx + gridWidth]) / 2 - rippleMap[idx]) * damping;
+            rippleMap[idx] = newVal;
+          }
         }
-        
-        const waterColor = getRandomColor();
-        document.documentElement.style.setProperty('--water-color', waterColor);
-        
-        // Determine text color based on background brightness
-        function getBrightness(color) {
-            // For HSL colors
-            const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
-            if (match) {
-                const lightness = parseInt(match[3]);
-                return lightness;
-            }
-            return 50; // Default to middle lightness if parsing fails
+        // Swap the arrays: the new state (rippleMap) becomes the old state for next frame
+        let temp = lastMap;
+        lastMap = rippleMap;
+        rippleMap = temp;
+      }
+      
+      // FUNCTION THAT RENDERS THE SIMULATION TO THE OFFSCREEN CANVAS THEN SCALES IT UP
+      function renderRipple() {
+        offCanvas.width = gridWidth;
+        offCanvas.height = gridHeight;
+        const imageData = offCtx.createImageData(gridWidth, gridHeight);
+        const data = imageData.data;
+        // The ripple value will displace the base color a little.
+        const factor = 3;
+        for (let y = 0; y < gridHeight; y++) {
+          for (let x = 0; x < gridWidth; x++) {
+            const idx = x + y * gridWidth;
+            const ripple = lastMap[idx];
+            // Calculate brightness offset from the ripple
+            const offset = ripple * factor;
+            const r = Math.min(255, Math.max(0, baseColor.r + offset));
+            const g = Math.min(255, Math.max(0, baseColor.g + offset));
+            const b = Math.min(255, Math.max(0, baseColor.b + offset));
+            const pixelIndex = idx * 4;
+            data[pixelIndex] = r;
+            data[pixelIndex + 1] = g;
+            data[pixelIndex + 2] = b;
+            data[pixelIndex + 3] = 255;
+          }
         }
-        
-        const brightness = getBrightness(waterColor);
-        const textColor = brightness > 50 ? 'black' : 'white';
-        document.documentElement.style.setProperty('--text-color', textColor);
-        
-        // Water wave simulation
-        const waves = [];
-        const ripples = [];
-        
-        class Wave {
-            constructor() {
-                this.x = 0;
-                this.amplitude = Math.random() * 20 + 5;
-                this.period = Math.random() * 200 + 100;
-                this.speed = Math.random() * 0.05 + 0.01;
-                this.phase = Math.random() * Math.PI * 2;
-                this.color = waterColor;
-            }
-            
-            update() {
-                this.phase += this.speed;
-                if (this.phase > Math.PI * 2) {
-                    this.phase -= Math.PI * 2;
-                }
-            }
-            
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.moveTo(0, canvas.height / 2);
-                
-                for (let x = 0; x < canvas.width; x += 5) {
-                    const y = Math.sin(x / this.period + this.phase) * this.amplitude;
-                    ctx.lineTo(x, canvas.height / 2 + y);
-                }
-                
-                ctx.lineTo(canvas.width, canvas.height);
-                ctx.lineTo(0, canvas.height);
-                ctx.closePath();
-                
-                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, this.color);
-                gradient.addColorStop(1, adjustColor(this.color, -20));
-                
-                ctx.fillStyle = gradient;
-                ctx.fill();
-            }
-        }
-        
-        class Ripple {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.radius = 0;
-                this.maxRadius = Math.random() * 100 + 50;
-                this.speed = Math.random() * 2 + 1;
-                this.opacity = 1;
-                this.color = adjustColor(waterColor, 20);
-            }
-            
-            update() {
-                this.radius += this.speed;
-                this.opacity = 1 - (this.radius / this.maxRadius);
-                return this.radius < this.maxRadius;
-            }
-            
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.strokeStyle = `${this.color}${Math.floor(this.opacity * 255).toString(16).padStart(2, '0')}`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
-        }
-        
-        // Function to adjust color brightness
-        function adjustColor(color, amount) {
-            const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
-            if (match) {
-                const h = parseInt(match[1]);
-                const s = parseInt(match[2]);
-                let l = parseInt(match[3]) + amount;
-                l = Math.max(0, Math.min(100, l));
-                return `hsl(${h}, ${s}%, ${l}%)`;
-            }
-            return color;
-        }
-        
-        // Initialize waves
-        for (let i = 0; i < 5; i++) {
-            waves.push(new Wave());
-        }
-        
-        // Click event for ripples
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            ripples.push(new Ripple(x, y));
-        });
-        
-        // Animation loop
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw base water color
-            ctx.fillStyle = waterColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Update and draw waves
-            for (const wave of waves) {
-                wave.update();
-                wave.draw(ctx);
-            }
-            
-            // Update and draw ripples
-            for (let i = ripples.length - 1; i >= 0; i--) {
-                const active = ripples[i].update();
-                if (active) {
-                    ripples[i].draw(ctx);
-                } else {
-                    ripples.splice(i, 1);
-                }
-            }
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
-    </script>
+        offCtx.putImageData(imageData, 0, 0);
+        // Draw the offscreen canvas scaled to full size with smooth interpolation
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(offCanvas, 0, 0, cw, ch);
+      }
+      
+      // THE MAIN ANIMATION LOOP
+      function animate() {
+        updateRipple();
+        renderRipple();
+        requestAnimationFrame(animate);
+      }
+      
+      // FUNCTION TO ADD DISTURBANCES (CREATE RIPPLES) WHEN MOUSE MOVES OR CLICKS
+      function disturb(cx, cy, magnitude) {
+        // convert canvas coordinates to simulation grid coordinates
+        const x = Math.floor(cx / cellSize);
+        const y = Math.floor(cy / cellSize);
+        if (x < 1 || x >= gridWidth - 1 || y < 1 || y >= gridHeight - 1) return;
+        const idx = x + y * gridWidth;
+        lastMap[idx] += magnitude;
+      }
+      
+      // MOUSE EVENTS FOR THE WATER INTERACTION
+      canvas.addEventListener('mousemove', function(e) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        // A small disturbance on mouse move
+        disturb(mx, my, 5);
+      });
+      
+      canvas.addEventListener('mousedown', function(e) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        // A stronger disturbance on click
+        disturb(mx, my, 50);
+      });
+      
+      // INITIALIZE AND START
+      resize();
+      animate();
+    })();
+  </script>
 </body>
 </html>
