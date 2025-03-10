@@ -149,7 +149,7 @@
                 this.size = Math.random() * 25 + 35;
                 this.speedX = Math.random() * 2 - 1;
                 this.speedY = Math.random() * 2 - 1;
-                this.brightness = Math.random() * 0.5 + 0.5;
+                this.brightness = Math.random() * 0.5 + 0.9;
                 this.width = width;
                 this.height = height;
                 
@@ -180,7 +180,7 @@
                 this.element.style.width = `${this.size}px`;
                 this.element.style.height = `${this.size}px`;
                 this.element.style.opacity = pulsingBrightness;
-                this.element.style.background = `radial-gradient(circle, rgba(255, 255, 155, ${pulsingBrightness}) 0%, rgba(255, 255, 155, 0) 50%)`;
+                this.element.style.background = `radial-gradient(circle, rgba(255, 255, 155, ${pulsingBrightness}) 0%, rgba(255, 255, 155, 0) 30%)`;
             }
         }
 
