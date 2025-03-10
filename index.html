@@ -120,7 +120,7 @@
       let gridWidth, gridHeight;
       let rippleMap, lastMap; // two grids (as Float32Array arrays)
       // damping factor for ripple energy decay - increased for higher viscosity
-      const damping = 0.99;
+      const damping = 0.999;
       
       // Automatic disturbance parameters
       const autoDisturbInterval = 3000; // How often to create auto ripples (ms)
